@@ -6,13 +6,17 @@ import { APP_ROUTING } from './app.routes';
 
 //Modules
 import { PagesModule } from './pages/pages.module';
+
+//Temporal
 import { FormsModule } from '@angular/forms';
 
-//Login Components
+//Servicios
+import { ServiceModule } from './services/service.module';
+
+//Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './login/registro.component';
-
 
 
 @NgModule({
@@ -25,7 +29,8 @@ import { RegistroComponent } from './login/registro.component';
     BrowserModule,
     APP_ROUTING,
     PagesModule,
-    FormsModule        
+    FormsModule,
+    ServiceModule        
   ],
   providers: [],
   bootstrap: [AppComponent] 
