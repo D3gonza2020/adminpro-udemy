@@ -6,6 +6,7 @@ import { APP_ROUTING } from './app.routes';
 
 //Modules
 import { PagesModule } from './pages/pages.module';
+import { FormsModule } from '@angular/forms';
 
 //Login Components
 import { AppComponent } from './app.component';
@@ -18,13 +19,13 @@ import { RegistroComponent } from './login/registro.component';
   declarations: [
     AppComponent,
     LoginComponent,   
-    RegistroComponent,
-           
+    RegistroComponent               
   ],
   imports: [
     BrowserModule,
     APP_ROUTING,
-    PagesModule        
+    PagesModule,
+    FormsModule        
   ],
   providers: [],
   bootstrap: [AppComponent] 
