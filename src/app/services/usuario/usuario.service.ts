@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIOS } from '../../config/config';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
+import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+import { URL_SERVICIOS } from '../../config/config';
+
 import Swal from 'sweetalert2'
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +18,9 @@ export class UsuarioService {
   token:string;
 
   constructor(public http:HttpClient,
-              public router:Router) {     
-    console.log('Servicio de usuario listo!!');
+              public router:Router,
+              public _subirArchivoService:SubirArchivoService) {    
+
     this.cargarStorage();
   }
 
@@ -99,5 +102,40 @@ export class UsuarioService {
                   return resp.usuario;
                 })
             )
+  }
+
+  actualizarUsuario (usuario:Usuario){
+
+    let url = URL_SERVICIOS + '/usuario/' + usuario._id;
+    url += '?token=' + this.token;
+
+    return this.http.put(url, usuario)
+            .pipe(
+              map((resp:any) => {
+                  this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Usuario actualizado',
+                    text: usuario.nombre
+                  });
+                  return true;
+              })
+            )
+  }
+
+  cambiarImagen(archivo:File, id:string){
+    this._subirArchivoService.subirArchivo(archivo, 'usuarios', id)
+      .then((resp:any) => {
+        this.usuario.img = resp.usuario.img;
+        Swal.fire({
+          icon: 'success',
+          title: 'Imagen Actualizada',
+          text: this.usuario.nombre
+        });
+        this.guardarStorage(id,this.token, this.usuario);
+      })
+      .catch(resp => {
+        console.log(resp);
+      });
   }
 }
