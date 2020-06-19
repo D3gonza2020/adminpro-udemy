@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 import { URL_SERVICIOS } from '../../config/config';
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2' 
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +112,11 @@ export class UsuarioService {
     return this.http.put(url, usuario)
             .pipe(
               map((resp:any) => {
-                  this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+
+                  if(usuario._id = this.usuario._id){
+                    this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+                  }
+
                   Swal.fire({
                     icon: 'success',
                     title: 'Usuario actualizado',
@@ -136,6 +140,32 @@ export class UsuarioService {
       })
       .catch(resp => {
         console.log(resp);
-      });
+      }); 
+  }
+
+  cargarUsuarios( desde:number = 0){
+    let url = URL_SERVICIOS + '/usuario?desde=' + desde;
+    return this.http.get(url);
+  }
+
+  buscarUsuarios( termino:string){
+    let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
+    return this.http.get(url).pipe(
+      map((resp:any) => resp.usuarios)
+    );
+  }
+
+  borrarUsuario(id:string){
+    let url = `${URL_SERVICIOS}/usuario/${id}?token=${this.token}`;
+    return this.http.delete(url).pipe(
+      map(resp => {
+        Swal.fire(
+          'Usuario Eliminado',
+          'El usuario a sido eliminado correctamente',
+          'success'
+        );
+        return true;
+      })
+    );
   }
 }
