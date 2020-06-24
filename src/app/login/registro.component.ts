@@ -80,7 +80,11 @@ export class RegistroComponent implements OnInit {
     );
 
     this._usuarioService.crearUsuario(usuario)
-    .subscribe(resp => this._router.navigate(['/login']));
+    .subscribe(usuario => {     
+        if(usuario.ok || !usuario.error){
+          this._router.navigate(['/login']);
+        }       
+    });
 
   }
 

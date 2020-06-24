@@ -29,13 +29,6 @@
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card card-body">
-            <h4 class="box-title m-b-0">Hospital</h4>
-            <img [src]="hospital.img | imagen:'hospital'" alt="hospital.nombre" class="rounded img-fluid">
-        </div>  
-    </div>
-
     <div class="col-md-3" *ngIf="medico._id">
         <div class="card card-body">
             <h4 class="box-title m-b-0">Fotografía</h4>
@@ -43,5 +36,11 @@
         </div> 
     </div>
 
+    <div class="col-md-3">
+        <div class="card card-body">
+            <h4 class="box-title m-b-0">Hospital</h4>
+            <img [src]="hospital.img | imagen:'hospital'" alt="hospital.nombre" class="rounded img-fluid">
+        </div>  
+    </div>
 
 </div>
