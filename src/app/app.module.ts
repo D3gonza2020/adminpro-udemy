@@ -5,33 +5,36 @@ import { NgModule } from '@angular/core';
 import { APP_ROUTING } from './app.routes';
 
 //Modules
-import { PagesModule } from './pages/pages.module';
 
 //Temporal
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Servicios
 import { ServiceModule } from './services/service.module';
+import { SharedModule } from './shared/shared.module';
 
 //Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './login/registro.component';
+import { PagesComponent } from './pages/pages.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,   
-    RegistroComponent               
+    RegistroComponent,
+    PagesComponent               
   ],
   imports: [
     BrowserModule,
-    APP_ROUTING,
-    PagesModule,
+    APP_ROUTING,  
     FormsModule,
     ReactiveFormsModule,
-    ServiceModule        
+    ServiceModule,
+    SharedModule        
   ],
   providers: [],
   bootstrap: [AppComponent] 

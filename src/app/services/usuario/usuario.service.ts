@@ -27,6 +27,26 @@ export class UsuarioService {
     this.cargarStorage();
   }
 
+  renuevaToken(){
+    let url = `${URL_SERVICIOS}/login/renuevaToken?token=${this.token}`;
+    return this.http.get(url).pipe(
+        map((resp:any) => {
+          this.token = resp.token;
+          localStorage.setItem('token',this.token);
+          return true;
+        }),
+        catchError (err => {   
+          this.router.navigate(['/login']);          
+          Swal.fire({
+            icon: 'error',
+            title: 'Token no renovado',
+            text: 'No fue posible renovar el token, el token ya expiró'
+          });
+          return of(err);
+        })    
+    )
+  }
+
   estaLogueado(){
     return (this.token.length > 5) ? true : false;
   }
